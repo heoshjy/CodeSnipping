@@ -1,0 +1,9 @@
+function TForm2.GetComputerCode: String;
+var
+  Size : Cardinal;
+  MachineCode: array[0..MAX_COMPUTERNAME_LENGTH+1] of Char;
+begin
+  Size := MAX_COMPUTERNAME_LENGTH+1;
+  GetComputerName(MachineCode, Size);
+  Result := MachineCode;
+end;
