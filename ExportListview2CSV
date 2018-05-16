@@ -1,0 +1,72 @@
+function TForm.ExportListViewAsCSV(ListView: TAdvListView;
+  FileName: String; SaveColumnName: Boolean): Boolean;
+var
+  OpenDialog: TOpenDialog;
+  StringList, ARow : TStringList;
+  i, j : Integer;
+  BackupFileName, nFileName: String;
+begin
+  Result := True;
+
+  StringList := TStringList.Create;
+  ARow := TStringList.Create;
+  StringList.StrictDelimiter := True;
+  ARow.StrictDelimiter := True;
+
+  if FileName = '' then
+  begin
+    OpenDialog := TOpenDialog.Create(nil);
+    OpenDialog.DefaultExt := '.csv';
+
+    if OpenDialog.Execute then
+    begin
+      nFileName := OpenDialog.FileName;
+    end;
+  end
+  else
+  begin
+    if FileExists(FileName) then
+    begin
+      StringList.Clear;
+      StringList.LoadFromFile(FileName);
+    end;
+    OpenDialog.Free;
+  end;
+
+  if Length(Trim(FileName)) = 0 then Exit;
+
+  try
+    try
+      if SaveColumnName then
+      begin
+        { WriteColumnsName }
+        ARow.Clear;
+        for i := 0 to ListView.Columns.Count - 1 do
+        begin
+          ARow.Add(ListView.Columns[i].Caption);
+        end;
+        StringList.Add(ARow.CommaText);
+      end;
+
+      { WriteItems }
+      for i := 0 to ListView.Items.Count - 1 do
+      begin
+        ARow.Clear;
+        ARow.Add(ListView.Items[i].Caption);
+
+        for j := 0 to ListView.Items[i].SubItems.Count - 1 do
+        begin
+          ARow.Add(ListView.Items[i].SubItems[j]);
+        end;
+        StringList.Add(ARow.CommaText);
+      end;
+
+      StringList.SaveToFile(FileName);
+    except
+      Result := False;
+    end;
+  finally
+    StringList.Free;
+    ARow.Free;
+  end;
+end;
