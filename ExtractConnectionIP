@@ -1,0 +1,10 @@
+function TEventViewThread.GetHostNameExt(Connection: TSQLConnection): String;
+var
+  idx: Integer;
+  ParamStr: String;
+begin
+  idx := Connection.Params.IndexOfName('HostName');
+  ParamStr := Connection.Params[idx];
+
+  Result := ParamStr.Substring(ParamStr.IndexOf('=')+1, (ParamStr.IndexOf(':')- ParamStr.IndexOf('=')-1));
+end;
