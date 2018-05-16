@@ -1,0 +1,19 @@
+function GetFileModiDT: TDateTime;
+var
+  FilePath : String;
+  FileData: TWin32FindData;
+  ModiDT: TDateTime;
+begin
+  if FilePath = '' then
+  begin
+    if OpenDialog1.Execute then
+    begin
+      ModiDT := 0.0;
+      FilePath := OpenDialog1.FileName;
+      FileAge(FilePath, ModiDT);
+
+      Result := ModiDT;
+//      ShowMessage(FormatDateTime('yyyy-mm-dd hh:nn:ss.zzz', ModiDT));
+    end;
+  end;
+end;
