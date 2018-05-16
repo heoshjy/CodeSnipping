@@ -1,0 +1,32 @@
+function CompareFileVersion(CurrFileVer: String; CriterionVer: String): Boolean;
+var
+  CurrList, CritList: TStringList;
+  temp1, temp2, i: Integer;
+begin
+  Result := True;
+
+  CurrList := TStringList.Create;
+  CritList := TStringList.Create;
+
+  StringSplit('.', CurrFileVer, CurrList);
+  StringSplit('.', CriterionVer, CritList);
+
+  for i := 0 to CurrList.Count - 1 do
+  begin
+    if CurrList.Strings[i] = CritList.Strings[i] then
+      Continue
+    else
+    begin
+      temp1 := CurrList.Strings[i].ToInteger;
+      temp2 := CritList.Strings[i].ToInteger;
+
+      if temp2 > temp1 then
+        Result := False;
+
+      break;
+    end;
+  end;
+
+  CurrList.Free;
+  CritList.Free;
+end;
