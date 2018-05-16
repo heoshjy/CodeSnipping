@@ -1,0 +1,14 @@
+// dll에서 Handle = 0 > dll 호출한 exe명이 나타남
+// dll에서 Handle = hInstance > 자기자신
+
+// exe에서 Handle = 0 > 자기자신
+// exe에서 Handle = hInstance > 자기자신
+
+function TForm2.GetModulePath(Handle: Integer): String;
+var
+  ModulePath : array[0..MAX_PATH-1] of Char;
+begin
+  GetModuleFileName(hInstance, (ModulePath), MAX_PATH-1);
+  Result := ModulePath;
+end;
+
