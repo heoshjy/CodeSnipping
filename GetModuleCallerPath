@@ -4,7 +4,7 @@
 // exe에서 Handle = 0 > 자기자신
 // exe에서 Handle = hInstance > 자기자신
 
-function TForm2.GetExeCallerPath(Handle: Integer): String;
+function TForm2.GetModuleCallerPath(Handle: Integer): String;
 var
   ModulePath : array[0..MAX_PATH-1] of Char;
 begin
