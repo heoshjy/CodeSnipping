@@ -1,0 +1,9 @@
+function  AlphabeticalSort(Str1, Str2: String): Integer;
+begin
+  if Str1 = Str2 then
+    Result := 0
+  else if Str1 < Str2 then
+    Result := -1
+  else
+    Result := 1;
+end;
